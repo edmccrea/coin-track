@@ -3,8 +3,16 @@
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
 a {
   text-decoration: none;
+}
+
+.coin-name {
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }

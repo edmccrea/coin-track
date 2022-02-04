@@ -14,6 +14,11 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import { useNavigate } from 'react-router-dom';
 import { CoinsState } from '../CoinContext';
 
+const style = {
+  display: { xs: 'none', md: 'inline-block' },
+  mr: 6,
+};
+
 const Header = ({ light, setLight, globalStats }) => {
   const { currency, setCurrency } = CoinsState();
 
@@ -44,11 +49,11 @@ const Header = ({ light, setLight, globalStats }) => {
           >
             Coin Track
           </Typography>
-          <Typography sx={{ mr: 6 }} variant='body2'>
+          <Typography sx={{ ...style }} variant='body2'>
             Coins: {globalStats.active_cryptocurrencies}
           </Typography>
-          <Typography sx={{ mr: 6 }} variant='body2'>
-            Market Cap:{' '}
+          <Typography sx={{ ...style }} variant='body2'>
+            Dominance:{' '}
           </Typography>
 
           <FormControl variant='standard' sx={{ m: 1, minWidth: 80 }}>

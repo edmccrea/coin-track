@@ -12,29 +12,33 @@ import {
   TableCell,
   TableBody,
   LinearProgress,
+  Pagination,
+  Box,
 } from '@mui/material';
-import { currencyFormat } from '../assets/currencyFormat';
+import { currencyFormat, colorCheck } from '../assets/utils';
+import { useMediaQuery } from '@mui/material';
 
-const CoinTable = ({ light }) => {
+const CoinTable = ({ light, globalStats }) => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [inputData, setInputData] = useState('');
+  const [page, setPage] = useState(1);
 
   const navigate = useNavigate();
 
   const { currency, symbol } = CoinsState();
 
-  const fetchCoins = async () => {
-    const { data } = await axios.get(CoinList(currency));
+  const fetchCoins = async (page) => {
+    setLoading(true);
+    const { data } = await axios.get(CoinList(currency, page));
     setCoins(data);
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchCoins();
-    console.log(coins);
+    fetchCoins(page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency]);
+  }, [currency, page]);
 
   const handleSearch = () => {
     return coins.filter(
@@ -43,6 +47,9 @@ const CoinTable = ({ light }) => {
         coin.symbol.includes(inputData.toLowerCase())
     );
   };
+
+  const matches = useMediaQuery('(min-width:900px)');
+
   return (
     <div>
       <TextField
@@ -99,47 +106,105 @@ const CoinTable = ({ light }) => {
                         width: '18px',
                         verticalAlign: 'middle',
                         marginRight: '8px',
+                        display: 'inline-block',
                       }}
                     />
-                    <span
+                    <Box
+                      component='span'
                       onClick={() => navigate(`/coins/${row.id}`)}
-                      style={{
+                      sx={{
                         display: 'inline-block',
-                        width: '115px',
+                        width: matches ? '115px' : '50px',
                         fontWeight: 'bold',
                       }}
+                      className='coin-name'
                     >
-                      {row.name}
-                    </span>
-                    <span style={{ paddingLeft: '0.5rem', fontSize: '0.7rem' }}>
-                      {row.symbol.toUpperCase()}
-                    </span>
+                      {matches ? row.name : row.symbol.toUpperCase()}
+                    </Box>
+                    <Box
+                      component='span'
+                      sx={{ paddingLeft: '0.5rem', fontSize: '0.7rem' }}
+                    >
+                      {matches ? row.symbol.toUpperCase() : ''}
+                    </Box>
                   </TableCell>
                   <TableCell align='right'>
-                    {symbol}
+                    {currency !== 'SEK' && symbol}
                     {currencyFormat(row.current_price)}
+                    {currency === 'SEK' && symbol}
                   </TableCell>
-                  <TableCell align='right'>
-                    {row.price_change_percentage_1h_in_currency.toFixed(1)}%
+                  <TableCell
+                    align='right'
+                    sx={{
+                      color: colorCheck(
+                        row.price_change_percentage_1h_in_currency,
+                        light
+                      ),
+                    }}
+                  >
+                    {Number(row.price_change_percentage_1h_in_currency).toFixed(
+                      1
+                    )}
+                    %
                   </TableCell>
-                  <TableCell align='right'>
-                    {row.price_change_percentage_24h.toFixed(1)}%
+                  <TableCell
+                    align='right'
+                    sx={{
+                      color: colorCheck(
+                        row.price_change_percentage_24h_in_currency,
+                        light
+                      ),
+                    }}
+                  >
+                    {Number(row.price_change_percentage_24h).toFixed(1)}%
                   </TableCell>
-                  <TableCell align='right'>
-                    {row.price_change_percentage_7d_in_currency.toFixed(1)}%
+                  <TableCell
+                    align='right'
+                    sx={{
+                      color: colorCheck(
+                        row.price_change_percentage_7d_in_currency,
+                        light
+                      ),
+                    }}
+                  >
+                    {Number(row.price_change_percentage_7d_in_currency).toFixed(
+                      1
+                    )}
+                    %
                   </TableCell>
                   <TableCell align='right'>{row.volume}</TableCell>
                   <TableCell align='right'>
-                    {symbol}
+                    {currency !== 'SEK' && symbol}
                     {currencyFormat(row.market_cap)}
+                    {currency === 'SEK' && symbol}
                   </TableCell>
-                  <TableCell align='center'>{row.graph}</TableCell>
+                  <TableCell align='center' sx={{ padding: '5px 16px' }}>
+                    <img
+                      src={`https://www.coingecko.com/coins/${
+                        row.image.split('/')[5]
+                      }/sparkline`}
+                      alt=''
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         )}
       </TableContainer>
+      <Pagination
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '20px',
+        }}
+        count={parseInt(globalStats.active_cryptocurrencies / 100)}
+        onChange={(_, value) => {
+          setPage(value);
+          window.scroll(0, 100);
+        }}
+      />
     </div>
   );
 };

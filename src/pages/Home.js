@@ -1,5 +1,6 @@
 import React from 'react';
 import CoinTable from '../components/CoinTable';
+import { colorCheck } from '../assets/utils';
 
 import { Typography, Container } from '@mui/material';
 
@@ -12,10 +13,18 @@ const Home = ({ light, globalStats }) => {
         </Typography>
         <Typography sx={{ mb: 3, fontSize: '14px' }}>
           Today, the global cryptocurrency marketcap is ..., a change of{' '}
-          {globalStats.market_cap_change_percentage_24h_usd.toFixed(1)}% in the
-          last 24 hours.
+          <span
+            style={{
+              color: colorCheck(
+                globalStats.market_cap_change_percentage_24h_usd
+              ),
+            }}
+          >
+            {globalStats.market_cap_change_percentage_24h_usd.toFixed(1)}%
+          </span>{' '}
+          in the last 24 hours.
         </Typography>
-        <CoinTable light={light} />
+        <CoinTable light={light} globalStats={globalStats} />
       </Container>
     </>
   );

@@ -13,7 +13,7 @@ export const themeDark = createTheme({
     primary: {
       light: 'rgba(59,130,246,0.5)',
       main: '#f8f9fa',
-      dark: blueGrey[700],
+      dark: 'red',
       contrastText: '#fff',
     },
     secondary: {
@@ -21,6 +21,12 @@ export const themeDark = createTheme({
       main: '#9B9B9B',
       dark: teal[700],
       contrastText: '#fff',
+    },
+    success: {
+      main: '#66bb6a',
+    },
+    error: {
+      main: '#f44336',
     },
   },
 });
@@ -44,6 +50,12 @@ export const themeLight = createTheme({
       main: '#9B9B9B',
       dark: teal[700],
       contrastText: '#fff',
+    },
+    success: {
+      main: '#66bb6a',
+    },
+    error: {
+      main: '#f44336',
     },
   },
 });
