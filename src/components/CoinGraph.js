@@ -12,8 +12,10 @@ import {
   Typography,
 } from '@mui/material';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS } from 'chart.js/auto';
 import { graphSpan } from '../config/data';
+
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 const CoinGraph = ({ coin, light }) => {
   const [graphData, setGraphData] = useState([]);
@@ -30,6 +32,7 @@ const CoinGraph = ({ coin, light }) => {
 
   useEffect(() => {
     fetchGraphData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days]);
 
   const pad = (num) => {
