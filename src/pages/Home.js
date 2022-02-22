@@ -1,10 +1,13 @@
 import React from 'react';
 import CoinTable from '../components/CoinTable';
-import { colorCheck } from '../assets/utils';
+import { colorCheck, currencyFormat } from '../assets/utils';
+import { CoinsState } from '../CoinContext';
 
 import { Typography, Container } from '@mui/material';
 
 const Home = ({ light, globalStats }) => {
+  const { currency, symbol } = CoinsState();
+
   return (
     <>
       <Container sx={{ mt: 10 }}>
@@ -12,7 +15,12 @@ const Home = ({ light, globalStats }) => {
           Cryptocurrency Prices by Marketcap
         </Typography>
         <Typography sx={{ mb: 3, fontSize: '14px' }}>
-          Today, the global cryptocurrency marketcap is ..., a change of{' '}
+          Today, the global cryptocurrency marketcap is{' '}
+          {currency !== 'SEK' && symbol}
+          {currencyFormat(
+            globalStats.total_market_cap[currency.toLowerCase()].toFixed()
+          )}
+          {currency === 'SEK' && symbol}, a change of{' '}
           <span
             style={{
               color: colorCheck(

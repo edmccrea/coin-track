@@ -51,7 +51,7 @@ function App() {
               path='/'
               element={<Home light={light} globalStats={globalStats} />}
             />
-            <Route path='/coins/:id' element={<Coin />} />
+            <Route path='/coins/:id' element={<Coin light={light} />} />
           </Routes>
         </>
       )}

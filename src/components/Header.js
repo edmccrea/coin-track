@@ -28,6 +28,17 @@ const Header = ({ light, setLight, globalStats }) => {
 
   const navigate = useNavigate();
 
+  const findDominant = () => {
+    let arr = Object.values(globalStats.market_cap_percentage);
+    let max = Math.max(...arr);
+
+    let coin = Object.keys(globalStats.market_cap_percentage).find(
+      (key) => globalStats.market_cap_percentage[key] === max
+    );
+
+    return `${coin.toUpperCase()} ${max.toFixed(1)}`;
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -53,7 +64,7 @@ const Header = ({ light, setLight, globalStats }) => {
             Coins: {globalStats.active_cryptocurrencies}
           </Typography>
           <Typography sx={{ ...style }} variant='body2'>
-            Dominance:{' '}
+            Dominance: {findDominant()}%
           </Typography>
 
           <FormControl variant='standard' sx={{ m: 1, minWidth: 80 }}>

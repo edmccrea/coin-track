@@ -70,7 +70,7 @@ const CoinTable = ({ light, globalStats }) => {
               <TableRow
                 sx={
                   !light
-                    ? { backgroundColor: '#343A4066' }
+                    ? { backgroundColor: '#FFFFFF29' }
                     : { backgroundColor: 'primary' }
                 }
               >
@@ -80,7 +80,7 @@ const CoinTable = ({ light, globalStats }) => {
                 <TableCell align='right'>1h</TableCell>
                 <TableCell align='right'>24h</TableCell>
                 <TableCell align='right'>7d</TableCell>
-                <TableCell align='right'>24h Volume</TableCell>
+                <TableCell align='right'>All Time High</TableCell>
                 <TableCell align='right'>Mkt Cap</TableCell>
                 <TableCell align='center'>Last 7 Days</TableCell>
               </TableRow>
@@ -172,7 +172,11 @@ const CoinTable = ({ light, globalStats }) => {
                     )}
                     %
                   </TableCell>
-                  <TableCell align='right'>{row.volume}</TableCell>
+                  <TableCell align='right'>
+                    {currency !== 'SEK' && symbol}
+                    {currencyFormat(row.ath)}
+                    {currency === 'SEK' && symbol}
+                  </TableCell>
                   <TableCell align='right'>
                     {currency !== 'SEK' && symbol}
                     {currencyFormat(row.market_cap)}
@@ -199,7 +203,7 @@ const CoinTable = ({ light, globalStats }) => {
           justifyContent: 'center',
           padding: '20px',
         }}
-        count={parseInt(globalStats.active_cryptocurrencies / 100)}
+        count={parseInt(globalStats.active_cryptocurrencies / 100 - 3)}
         onChange={(_, value) => {
           setPage(value);
           window.scroll(0, 100);

@@ -8,6 +8,11 @@
 
 a {
   text-decoration: none;
+  color: pink;
+  transition: all ease 300ms;
+  &:hover {
+    color: rgba(255, 192, 203, 0.742);
+  }
 }
 
 .coin-name {
