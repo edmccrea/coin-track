@@ -10,6 +10,7 @@ import {
   Button,
   ButtonGroup,
   Typography,
+  Container,
 } from '@mui/material';
 import { Line } from 'react-chartjs-2';
 import { graphSpan } from '../config/data';
@@ -126,7 +127,17 @@ const CoinGraph = ({ coin, light }) => {
   return (
     <Box sx={{ width: '100%' }}>
       {loading ? (
-        <CircularProgress size={80} />
+        <Container
+          sx={{
+            width: '100%',
+            height: '75vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress size={80} />
+        </Container>
       ) : (
         <>
           <ButtonGroup
