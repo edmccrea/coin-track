@@ -40,7 +40,7 @@ const Coin = ({ light }) => {
   }, []);
 
   return (
-    <Container>
+    <Container sx={{ minHeight: 'calc(100vh - 200px)' }}>
       {loading ? (
         <Container
           sx={{

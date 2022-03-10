@@ -6,6 +6,7 @@ import './App.scss';
 
 //Components
 import Header from './components/Header';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Coin from './pages/Coin';
 
@@ -53,6 +54,7 @@ function App() {
             />
             <Route path='/coins/:id' element={<Coin light={light} />} />
           </Routes>
+          <Footer light={light} />
         </>
       )}
     </ThemeProvider>
