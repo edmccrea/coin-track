@@ -186,7 +186,7 @@ const CoinTable = ({ light, globalStats }) => {
                     <img
                       src={`https://www.coingecko.com/coins/${
                         row.image.split('/')[5]
-                      }/sparkline`}
+                      }/sparkline.svg`}
                       alt=''
                     />
                   </TableCell>
